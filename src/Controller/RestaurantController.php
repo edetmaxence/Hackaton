@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Restaurant;
 use App\Repository\RestaurantRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -18,5 +19,12 @@ class RestaurantController extends AbstractController
 
         $jsonRestaurantList = $serializer->serialize($restaurantList, 'json');
         return new JsonResponse($jsonRestaurantList, Response::HTTP_OK, [], true);
+    }
+
+    #[Route('/api/restaurants/{id}', name: 'app_restaurants_details', methods: ['GET'])]
+    public function getDetailRestaurant(Restaurant $restaurant, SerializerInterface $serializer): JsonResponse
+    {
+        $jsonRestaurant = $serializer->serialize($restaurant, 'json');
+        return new JsonResponse($jsonRestaurant, Response::HTTP_OK, ['accept' => 'json'], true);
     }
 }
