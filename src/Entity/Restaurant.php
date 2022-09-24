@@ -3,9 +3,15 @@
 namespace App\Entity;
 
 use App\Repository\RestaurantRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: RestaurantRepository::class)]
+#[Vich\Uploadable]
 class Restaurant
 {
     #[ORM\Id]
@@ -17,7 +23,40 @@ class Restaurant
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $city = null;
+    private ?string $adress = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $tel = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $website = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $cover = null;
+
+    #[ORM\Column(length: 255)]
+    #[Assert\Image(mimeTypesMessage: 'Ceci n\'est pas une image')]
+    #[Assert\File(maxSize: '3M',
+     maxSizeMessage: 'Cette image ne doit pas dépasser les {{ limit }} {{ suffix }}',
+
+     )]
+    private ?string $coverFile = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $created_at = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $updated_at = null;
+
+    #[ORM\OneToMany(mappedBy: 'restaurant', targetEntity: Advise::class)]
+    private Collection $advises;
+
+    public function __construct()
+    {
+        $this->advises = new ArrayCollection();
+    }
+
+    
 
     public function getId(): ?int
     {
@@ -36,15 +75,119 @@ class Restaurant
         return $this;
     }
 
-    public function getCity(): ?string
+    public function getAdress(): ?string
     {
-        return $this->city;
+        return $this->adress;
     }
 
-    public function setCity(string $city): self
+    public function setAdress(string $adress): self
     {
-        $this->city = $city;
+        $this->adress = $adress;
 
         return $this;
     }
+
+    public function getTel(): ?string
+    {
+        return $this->tel;
+    }
+
+    public function setTel(string $tel): self
+    {
+        $this->tel = $tel;
+
+        return $this;
+    }
+
+    public function getWebsite(): ?string
+    {
+        return $this->website;
+    }
+
+    public function setWebsite(string $website): self
+    {
+        $this->website = $website;
+
+        return $this;
+    }
+
+    public function getCover(): ?string
+    {
+        return $this->cover;
+    }
+
+    public function setCover(string $cover): self
+    {
+        $this->cover = $cover;
+
+        return $this;
+    }
+
+    public function getCoverFile(): ?string
+    {
+        return $this->coverFile;
+    }
+
+    public function setCoverFile(string $coverFile): self
+    {
+        $this->coverFile = $coverFile;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $created_at): self
+    {
+        $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updated_at;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $updated_at): self
+    {
+        $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Advise>
+     */
+    public function getAdvises(): Collection
+    {
+        return $this->advises;
+    }
+
+    public function addAdvise(Advise $advise): self
+    {
+        if (!$this->advises->contains($advise)) {
+            $this->advises->add($advise);
+            $advise->setRestaurant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAdvise(Advise $advise): self
+    {
+        if ($this->advises->removeElement($advise)) {
+            // set the owning side to null (unless already changed)
+            if ($advise->getRestaurant() === $this) {
+                $advise->setRestaurant(null);
+            }
+        }
+
+        return $this;
+    }
+
+  
 }
