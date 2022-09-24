@@ -13,7 +13,8 @@
             <div class="row mx-auto">
                 {% for restaurants in row %}
                     <article class="bg-white rounded shadow col-4 mx-3 my-3">
-                        <p>{{ restaurants.name }}, restaurant {{ restaurants.type}}</p>
+                        <a href="{{ path('app_restaurants_show', {id:restaurants.id}) }}">{{ restaurants.name }}, restaurant {{ restaurants.type}}</a>
+                        {# <p>{{ restaurants.name }}, restaurant {{ restaurants.type}}</p> #}
                         <p>{{ restaurants.adress}}</p>
                         <p>{{ restaurants.note }} étoiles / 5</p>
                     </article>

@@ -27,4 +27,10 @@ class RestaurantController extends AbstractController
         $jsonRestaurant = $serializer->serialize($restaurant, 'json');
         return new JsonResponse($jsonRestaurant, Response::HTTP_OK, ['accept' => 'json'], true);
     }
+
+    #[Route('/restaurants/{id}', name: 'app_restaurants_show', methods: ['GET'])]
+    public function showRestaurant(Restaurant $restaurant): Response
+    {
+        return $this->render('restaurant/show.html.twig', compact('restaurant'));
+    }
 }

@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title restaurant.name  %}
+
+{% block body %}
+
+  <div class="bg-white rounded shadow col-4 mx-3 my-3">
+    <p class="h2">{{ restaurant.name}}</p>
+    <p>Restaurant {{ restaurant.type}}</p>
+    <p>{{ restaurant.note}} étoiles / 5</p>
+    <p>{{ restaurant.adress}}</p>
+    <p>{{ restaurant.tel}}</p>
+    <p>{{ restaurant.website}}</p>
+  </div>
+
+{% endblock %} 
