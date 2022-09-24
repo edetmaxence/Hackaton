@@ -13,7 +13,7 @@
             <div class="row mx-auto">
                 {% for restaurants in row %}
                     <article class="bg-white rounded shadow col-4 mx-3 my-3">
-                        <p>{{ restaurants.name }}</p>
+                        <p>{{ restaurants.name }}, restaurant {{ restaurants.type}}</p>
                         <p>{{ restaurants.adress}}</p>
                         <p>{{ restaurants.note }} étoiles / 5</p>
                     </article>
