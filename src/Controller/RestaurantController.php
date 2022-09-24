@@ -2,19 +2,21 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Repository\RestaurantRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class RestaurantController extends AbstractController
 {
     #[Route('/api/restaurants', name: 'app_restaurants', methods: ['GET'])]
-    public function igetRestaurantList(): JsonResponse
+    public function getRestaurantList(RestaurantRepository $restaurantRepository, SerializerInterface $serializer): JsonResponse
     {
-        return new JsonResponse([
-            'message' => 'welcome to your new controller!',
-            'path' => 'src/Controller/RestaurantController.php'
-        ]);
+        $restaurantList = $restaurantRepository->findAll();
+
+        $jsonRestaurantList = $serializer->serialize($restaurantList, 'json');
+        return new JsonResponse($jsonRestaurantList, Response::HTTP_OK, [], true);
     }
 }
