@@ -34,7 +34,8 @@ class Restaurant
     #[ORM\Column(length: 255)]
     private ?string $cover = null;
 
-    #[ORM\Column(length: 255)]
+
+    #[Vich\UploadableField(mapping: 'projects', fileNameProperty: 'cover' )]
     #[Assert\Image(mimeTypesMessage: 'Ceci n\'est pas une image')]
     #[Assert\File(maxSize: '3M',
      maxSizeMessage: 'Cette image ne doit pas dépasser les {{ limit }} {{ suffix }}',
