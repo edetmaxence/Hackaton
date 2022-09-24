@@ -6,7 +6,22 @@
      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
          <a class="navbar-brand" href="#"> Symfony React Starter </a>
      </nav>
+
+     {% if restaurants|length > 0 %}
      
+        {% for row in restaurants|batch(2) %}
+            <div class="row mx-auto">
+                {% for restaurants in row %}
+                    <article class="bg-white rounded shadow col-4 mx-3 my-3">
+                        <p>{{ restaurants.name }}</p>
+                        <p>{{ restaurants.adress}}</p>
+                        <p>{{ restaurants.note }} étoiles / 5</p>
+                    </article>
+                {% endfor %}
+            </div>
+        {% endfor %}
+     
+     {% endif %}
      <div id="root"></div>
    
  {% endblock %}
