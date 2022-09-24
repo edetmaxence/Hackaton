@@ -10,6 +10,14 @@
     <div class="example-wrapper">
         <h2>Liste des restaurants</h2>
     </div>
-
+    
+    {% for restaurants in restaurants %}
+        {{ restaurants.name }}
+        {{ restaurants.tel }}
+        {{ restaurants.adress }}
+        {{ restaurants.website }}
+        {{ restaurants.cover }}
+        {{ restaurants.coverfile }}
+    {% endfor %}
    
  {% endblock %}

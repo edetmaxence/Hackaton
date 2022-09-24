@@ -49,17 +49,17 @@ class RestaurantController extends AbstractController
     }
 
 
-    #[Route('/delete/{id<[0-9]+>}', name: 'app_restaurants_delete', methods: 'DELETE')]
+    #[Route('/restaurants/{id<[0-9]+>}', name: 'app_restaurants_delete', methods: 'DELETE')]
     // #[Security("is_granted('ROLE_ADMIN')")]
     public function delete(Restaurant $restaurant, EntityManagerInterface $em): Response
     {
         $em->remove($restaurant);
         $em->flush();
 
-        return $this->redirectToRoute('/');
+        return $this->redirectToRoute('/restaurants');
     }
 
-    #[Route('/create', name: 'app_restaurants_create', methods: 'GET|POST')]
+    #[Route('/restaurants/create', name: 'app_restaurants_create', methods: 'GET|POST')]
     // #[Security("is_granted('ROLE_ADMIN')")]
     public function create(Request $request, EntityManagerInterface $em): Response
     {
@@ -82,7 +82,7 @@ class RestaurantController extends AbstractController
         ]);
     }
 
-    #[Route('/edit/id<[0-9]+>}', name: 'app_restaurants_edit', methods: "GET|PUT")]
+    #[Route('/restaurants/{id}', name: 'app_restaurants_edit', methods: "GET|PUT")]
     // #[Security("is_granted('ROLE_ADMIN')")]
     public function edit(Restaurant $restaurant, Request $request, EntityManagerInterface $em): Response
     {
@@ -99,7 +99,7 @@ class RestaurantController extends AbstractController
             return $this->redirectToRoute('app_restaurants');
         }
 
-        return $this->render('adherents/edit.html.twig',  [
+        return $this->render('restaurant/edit.html.twig',  [
             'restaurant' => $restaurant,
             'form' => $form->createView()
         ]);
