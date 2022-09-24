@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+ 
+ {% block title %} Create Restaurant {% endblock %}
+ 
+ {% block body %}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#"> Symfony React Starter </a>
+    </nav>
+
+    <div class="example-wrapper">
+        <h1>Création de restaurant</h1>
+    </div>
+
+    {{ form_start(form) }}
+
+        {{ form_row(form.name) }}
+        {{ form_row(form.adress) }}
+        {{ form_row(form.tel) }}
+        {{ form_row(form.website) }}
+        {{ form_row(form.cover) }}
+        {{ form_row(form.coverfile) }}
+        {{ form_row(form.created_at) }}
+        {{ form_row(form.updated_at) }}
+
+
+        <div class="d-inline">
+        <input type="submit" value="{{ submitButtonText|default('Ajouter un restaurant') }}" >
+        </div>
+
+    {{ form_end(form) }}
+
+
+   
+ {% endblock %}

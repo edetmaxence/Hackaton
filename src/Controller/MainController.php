@@ -13,10 +13,8 @@ class MainController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(RestaurantRepository $restaurantRepository): Response
     {
-        $restaurants = $restaurantRepository->findBy([], ['note' => 'DESC']);
-        return $this->render(
-            'main/index.html.twig',
-            ['restaurants' => $restaurants]
-        );
+        return $this->render('main/index.html.twig', [
+            'controller_name' => 'MainController',
+        ]);
     }
 }
