@@ -17,14 +17,13 @@
         {{ form_row(form.adress) }}
         {{ form_row(form.tel) }}
         {{ form_row(form.website) }}
-        {{ form_row(form.cover) }}
-        {{ form_row(form.coverfile) }}
-        {{ form_row(form.created_at) }}
-        {{ form_row(form.updated_at) }}
-
+        {# {{ form_row(form.cover) }} #}
+        {# {{ form_row(form.coverfile) }} #}
+        {# {{ form_row(form.created_at) }}
+        {{ form_row(form.updated_at) }} #}
 
         <div class="d-inline">
-        <input type="submit" value="{{ submitButtonText|default('Modifier un restaurant') }}" >
+          <input type="submit" value="Modifier un restaurant" formnovalidate="formnovalidate">
         </div>
 
     {{ form_end(form) }}

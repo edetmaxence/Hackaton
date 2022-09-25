@@ -10,12 +10,12 @@ use Doctrine\Common\Collections\Collection;
 use Symfony\Component\HttpFoundation\File\File;
 use Doctrine\Common\Collections\ArrayCollection;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Vich\UploaderBundle\Mapping\Annotation\Uploadable;
 use Symfony\Component\Validator\Constraints as Assert;
 
-
+#[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: RestaurantRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-#[Vich\Uploadable]
 class Restaurant
 {
     #[ORM\Id]
@@ -32,24 +32,23 @@ class Restaurant
     private ?string $adress = null;
 
     #[ORM\Column(length: 10, nullable: true)]
-    #[Assert\NotBlank]
     private ?string $tel = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Assert\NotBlank]
     private ?string $website = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $cover = null;
+    // #[ORM\Column(length: 255, nullable: true)]
+    // private ?string $cover = null;
 
-    #[Vich\UploadableField(mapping: 'projects', fileNameProperty: 'cover')]
-    #[Assert\Image(mimeTypesMessage: 'Ceci n\'est pas une image')]
-    #[Assert\File(
-        maxSize: '3M',
-        maxSizeMessage: 'Cette image ne doit pas dépasser les {{ limit }} {{ suffix }}',
-    )]
-    #[ORM\Column(length: 255)]
-    private ?string $coverfile = null;
+
+    // #[Vich\UploadableField(mapping: 'products', fileNameProperty: 'cover')]
+    // #[Assert\Image(mimeTypesMessage: 'Ceci n\'est pas une image')]
+    // #[Assert\File(
+    //     maxSize: '3M',
+    //     maxSizeMessage: 'Cette image ne doit pas dépasser les {{ limit }} {{ suffix }}',
+    // )]
+    // #[ORM\Column(length: 255, nullable: true)]
+    // private ?File $coverfile = null;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE, options: ['default' => 'CURRENT_TIMESTAMP'])]
     private ?\DateTimeInterface $created_at = null;
@@ -58,8 +57,11 @@ class Restaurant
     private ?\DateTimeInterface $updated_at = null;
 
 
-    #[ORM\OneToMany(mappedBy: 'restaurant', targetEntity: Advise::class)]
-    private Collection $advises;
+    // #[ORM\OneToMany(mappedBy: 'restaurant', targetEntity: Advise::class)]
+    // private Collection $advises;
+
+
+
 
     public function __construct()
     {
@@ -119,29 +121,43 @@ class Restaurant
         return $this;
     }
 
-    public function getCover(): ?string
-    {
-        return $this->cover;
-    }
+    // public function getCover(): ?string
+    // {
+    //     return $this->cover;
+    // }
 
-    public function setCover(string $cover): self
-    {
-        $this->cover = $cover;
+    // public function setCover(string $cover): self
+    // {
+    //     $this->cover = $cover;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function getCoverfile(): ?string
-    {
-        return $this->coverfile;
-    }
+    // public function getCoverfile(): ?File
+    // {
+    //     return $this->coverfile;
+    // }
 
-    public function setCoverfile(string $coverfile): self
-    {
-        $this->coverfile = $coverfile;
+    // public function setCoverfile(string $coverfile): self
+    // {
+    //     $this->coverfile = $coverfile;
 
-        return $this;
-    }
+    //     return $this;
+    // }
+
+    // /**
+    //  * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile|null $coverFile
+    //  */
+    // public function setCoverFile(?File $coverFile = null): void
+    // {
+    //     $this->coverFile = $coverFile;
+
+    //     if (null !== $coverFile) {
+    //         // It is required that at least one field changes if you are using doctrine
+    //         // otherwise the event listeners won't be called and the file is lost
+    //         $this->setUpdatedAt(new \DateTimeImmutable);
+    //     }
+    // }
 
     public function getCreatedAt(): ?\DateTimeInterface
     {
@@ -173,33 +189,33 @@ class Restaurant
         $this->setCreatedAt(new \DateTimeImmutable);
     }
 
-    /**
-     * @return Collection<int, Advise>
-     */
-    public function getAdvises(): Collection
-    {
-        return $this->advises;
-    }
+    // /**
+    //  * @return Collection<int, Advise>
+    //  */
+    // public function getAdvises(): Collection
+    // {
+    //     return $this->advises;
+    // }
 
-    public function addAdvise(Advise $advise): self
-    {
-        if (!$this->advises->contains($advise)) {
-            $this->advises->add($advise);
-            $advise->setRestaurant($this);
-        }
+    // public function addAdvise(Advise $advise): self
+    // {
+    //     if (!$this->advises->contains($advise)) {
+    //         $this->advises->add($advise);
+    //         $advise->setRestaurant($this);
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function removeAdvise(Advise $advise): self
-    {
-        if ($this->advises->removeElement($advise)) {
-            // set the owning side to null (unless already changed)
-            if ($advise->getRestaurant() === $this) {
-                $advise->setRestaurant(null);
-            }
-        }
+    // public function removeAdvise(Advise $advise): self
+    // {
+    //     if ($this->advises->removeElement($advise)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($advise->getRestaurant() === $this) {
+    //             $advise->setRestaurant(null);
+    //         }
+    //     }
 
-        return $this;
-    }
+    //     return $this;
+    // }
 }

@@ -82,9 +82,8 @@ class RestaurantController extends AbstractController
         ]);
     }
 
-    #[Route('/restaurants/{id}', name: 'app_restaurants_edit', methods: "GET|PUT")]
-    // #[Security("is_granted('ROLE_ADMIN')")]
-    public function edit(Restaurant $restaurant, Request $request, EntityManagerInterface $em): Response
+    #[Route('/restaurants/update/{id<[0-9]+>}', name: 'app_restaurants_edit', methods: 'GET|PUT|POST')]
+    public function update(Restaurant $restaurant, Request $request, EntityManagerInterface $em): Response
     {
 
         $form = $this->createForm(RestaurantType::class, $restaurant, [
@@ -96,7 +95,7 @@ class RestaurantController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $em->flush();
 
-            return $this->redirectToRoute('app_restaurants');
+            return $this->redirectToRoute('app_home');
         }
 
         return $this->render('restaurant/edit.html.twig',  [
